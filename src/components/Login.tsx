@@ -1,13 +1,13 @@
 import { Box, Button, TextField } from '@mui/material';
 import React, { useState, FormEvent, useRef, useEffect, ChangeEvent } from 'react';
-import { useAppSelector, useAppDispatch } from '../store/hooks'
-import { token, changeJWTToken } from '../store/slices/auth';
+import { useAppDispatch } from '../store/hooks'
+import { changeJWTToken } from '../store/slices/auth';
 
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Cookies from 'js-cookie'
 import { HOST } from '../dataForTable/functions';
@@ -29,28 +29,29 @@ const Login = () => {
         e.preventDefault()
         try {
             dispatch(changeLoading(true))
-            axios.post(HOST + '/ru/data/v3/testmethods/docs/login', { username, password }).then(res1 => {
-                console.log(res1)
-                if (!res1.data.error_code && loginPanel.current) {
-                    Cookies.set('token', res1.data.data.token)
-                    dispatch(changeJWTToken(res1.data.data.token))
-                    axios.defaults.headers['x-auth'] = res1.data.data.token
+            axios.post(HOST + '/ru/data/v3/testmethods/docs/login', { username, password }).then(res => {
+                if (!res.data.error_code && loginPanel.current) {
+                    Cookies.set('token', res.data.data.token)
+                    dispatch(changeJWTToken(res.data.data.token))
+                    axios.defaults.headers['x-auth'] = res.data.data.token
                     loginPanel.current.animate({
                         opacity: 0
                     }, {
                         duration: 500, fill: 'forwards', easing: 'ease-out'
                     })
-
                     setSuccsess(true)
                     dispatch(changeLoading(false))
                 } else {
-                    res1.data.error_code && dispatch(changeErrorMessage(res1.data.error_message || res1.data.error_text))
+                    res.data.error_code && dispatch(changeErrorMessage(res.data.error_message || res.data.error_text))
                     dispatch(changeLoading(false))
                 }
             })
-
         } catch (error) {
-            console.log(error)
+            if (typeof error === "string") {
+                dispatch(changeErrorMessage(error.toUpperCase()))
+            } else if (error instanceof Error) {
+                dispatch(changeErrorMessage(error.message))
+            }
         }
     }
 
@@ -60,9 +61,7 @@ const Login = () => {
 
     return (
         <ThemeProvider theme={theme}>
-
             <Box
-
                 sx={{
                     width: '80%',
                     height: 'min-content',

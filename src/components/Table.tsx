@@ -20,14 +20,31 @@ import LogoutButton from './LogoutButton';
 export default function Table() {
     const tokenSelector = useAppSelector(token)
     const tableSelector = useAppSelector(tableData)
-    const selectedTableRowSelector = useAppSelector(selectedTableRow)
-
     const dispatch = useAppDispatch()
     const navigate = useNavigate();
-
     const datasGrid = useRef<any>(null)
+    const [tableRow, setRow] = useState<any>([])
 
-
+    useEffect(() => {
+        if (tableSelector) {
+            let subArr: tableDataItem[] = []
+            tableSelector.forEach((row: any) => {
+                let subObj: any = {}
+                Object.keys(row).forEach((rowkey: any) => {
+                    if (rowkey === 'companySigDate' || rowkey === 'employeeSigDate') {
+                        if (row[rowkey]) {
+                            let nd = new Date(row[rowkey]).toISOString().split('.')[0]
+                            let date = nd.split('T')[0]
+                            let time = nd.split('T')[1]
+                            subObj[rowkey] = time + ' ' + date
+                        }
+                    } else subObj[rowkey] = row[rowkey]
+                })
+                subArr.push(subObj)
+            })
+            setRow(subArr)
+        }
+    }, [tableSelector])
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -39,7 +56,7 @@ export default function Table() {
             navigate("/")
         }
     }, [])
- 
+
     useEffect(() => {
         tokenSelector && fetchData(dispatch)
     }, [tokenSelector])
@@ -68,10 +85,14 @@ export default function Table() {
                 },
             }}>
             <Box
-                sx={{ display: 'flex', width: '100%', justifyContent: 'end', gap: '5px' }}>
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'end',
+                    gap: '5px'
+                }}>
                 <EditButtonWithDialog />
                 <DellButton />
-
                 <AddButtonWithDialog />
                 <LogoutButton />
             </Box>
@@ -104,7 +125,7 @@ export default function Table() {
                     }
                 }}
 
-                rows={tableSelector ? tableSelector : []}
+                rows={tableRow ? tableRow : []}
                 columns={columns}
                 checkboxSelection
                 onRowSelectionModelChange={(ids) => {

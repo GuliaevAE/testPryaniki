@@ -5,11 +5,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box, Button, TextField } from '@mui/material';
 
-
 import { CustomForm } from '../dataForTable/interfaces';
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 
-import {  selectedTableRow } from '../store/slices/tableData';
+import { selectedTableRow } from '../store/slices/tableData';
 import { asyncEditTableData } from '../dataForTable/functions';
 
 
@@ -31,22 +30,17 @@ const EditButtonWithDialog = () => {
         event.preventDefault();
         const target = event.currentTarget.elements;
 
-        let companySigDateNewDate = Date.parse(target.companySigDate.value)
-        let employeeSigDateNewDate = Date.parse(target.employeeSigDate.value)
-
-
         const data = {
-            companySigDate: isNaN(companySigDateNewDate) ? '' : new Date(companySigDateNewDate).toISOString(),
+            companySigDate: !target.companySigDate.value ? '' : target.companySigDate.value + ':00.000Z',
             companySignatureName: target.companySignatureName.value,
             documentName: target.documentName.value,
             documentStatus: target.documentStatus.value,
             documentType: target.documentType.value,
             employeeNumber: target.employeeNumber.value,
-            employeeSigDate: isNaN(employeeSigDateNewDate) ? '' : new Date(employeeSigDateNewDate).toISOString(),
+            employeeSigDate: !target.employeeSigDate.value ? '' : target.employeeSigDate.value + ':00.000Z',
             employeeSignatureName: target.employeeSignatureName.value,
             id: selectedTableRowSelector[0].id
         };
-        console.log(data)
         await asyncEditTableData(dispatch, data) && handleClose()
     }
     return (
@@ -86,7 +80,7 @@ const EditButtonWithDialog = () => {
                             margin='dense'
                             fullWidth label={"companySigDate"}
                             variant="standard"
-                            defaultValue={selectedTableRowSelector.length === 1 && selectedTableRowSelector[0].companySigDate && selectedTableRowSelector[0].companySigDate.split('.')[0]}
+                            defaultValue={selectedTableRowSelector.length === 1 && selectedTableRowSelector[0].companySigDate && new Date(selectedTableRowSelector[0].companySigDate).toISOString().split('.')[0]}
 
                         />
                         <TextField
@@ -148,7 +142,7 @@ const EditButtonWithDialog = () => {
                             fullWidth
                             label="employeeSigDate"
                             variant="standard"
-                            defaultValue={selectedTableRowSelector.length === 1 && selectedTableRowSelector[0].employeeSigDate && selectedTableRowSelector[0].employeeSigDate.split('.')[0]}
+                            defaultValue={selectedTableRowSelector.length === 1 && selectedTableRowSelector[0].employeeSigDate && new Date(selectedTableRowSelector[0].employeeSigDate).toISOString().split('.')[0]}
                         />
                         <TextField
                             id='employeeSignatureName'
