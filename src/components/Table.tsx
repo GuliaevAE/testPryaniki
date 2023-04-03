@@ -39,7 +39,7 @@ export default function Table() {
             navigate("/")
         }
     }, [])
-
+ 
     useEffect(() => {
         tokenSelector && fetchData(dispatch)
     }, [tokenSelector])
