@@ -1,16 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
+import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Table from './components/Table';
 import { Alert, AlertTitle, Container, LinearProgress } from '@mui/material';
-
 import { useAppSelector, useAppDispatch } from './store/hooks'
-import { token, changeJWTToken } from './store/slices/auth';
-import { changeArrayWithSelectedTableRows, tableData, selectedTableRow, loading, changeLoading, errorMessage, changeErrorMessage } from './store/slices/tableData';
+import {  loading, errorMessage, changeErrorMessage } from './store/slices/tableData';
 
 
 function App() {

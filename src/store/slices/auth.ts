@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
+import { authInitialStateInterface } from '../../dataForTable/interfaces'
 
-interface CounterState {
-  token: string ,
-}
 
-const initialState: CounterState = {
+
+const initialState: authInitialStateInterface = {
   token: '',
 }
 

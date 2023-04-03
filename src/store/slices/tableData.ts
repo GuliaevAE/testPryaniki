@@ -1,33 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
+import { tableDataInitialStateInterface, tableDataItem } from '../../dataForTable/interfaces'
 
 
-interface tableDataItem {
-    companySigDate: string,
-    companySignatureName: string,
-    documentName: string,
-    documentStatus: string,
-    documentType: string,
-    employeeNumber: string,
-    employeeSigDate: string,
-    employeeSignatureName: string,
-    id: string
-}
 
-interface CounterState {
-    tableData: tableDataItem[] | null,
-    selectedTableRow: tableDataItem[],
-    loading: boolean,
-    errorMessage:string
-}
 
-const initialState: CounterState = {
+const initialState: tableDataInitialStateInterface = {
     tableData: null,
     selectedTableRow: [],
     loading: false,
     errorMessage: ''
-
 }
 
 export const tableReducer = createSlice({
@@ -46,7 +29,6 @@ export const tableReducer = createSlice({
                 let index = state.tableData.indexOf(findedObj);
                 state.tableData[index] = action.payload
             }
-          
         },
         dellSomeRowsInTableData: (state, action: PayloadAction<string>) => {
             state.tableData = state.tableData && state.tableData.filter(item => item.id !== action.payload)
@@ -61,7 +43,6 @@ export const tableReducer = createSlice({
         changeErrorMessage: (state, action: PayloadAction<string>) => {
             state.errorMessage = action.payload
         },
-
     }
 })
 

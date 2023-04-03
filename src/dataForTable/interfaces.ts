@@ -35,6 +35,12 @@ export interface CustomDataObject {
 
 ////////////////redux
 
+export interface authInitialStateInterface {
+    token: string ,
+  }
+
+
+
 export interface tableDataItem {
     companySigDate: string,
     companySignatureName: string,
@@ -47,12 +53,9 @@ export interface tableDataItem {
     id: string
 }
 
-export interface CounterState {
+export interface tableDataInitialStateInterface {
     tableData: tableDataItem[] | null,
-    selectedTableRow: tableDataItem[]
-}
-
-export const initialState: CounterState = {
-    tableData: null,
-    selectedTableRow: []
+    selectedTableRow: tableDataItem[],
+    loading: boolean,
+    errorMessage:string
 }
