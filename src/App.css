@@ -1,0 +1,21 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: black;
+
+}
+
+body::-webkit-scrollbar{
+  width: 0;
+}
+
+* {
+  font-family:"Try_clover"
+}
+
+@font-face {
+  font-family: "Try_clover";
+  src: url(./assets/DolomanPavljenko.otf);
+}
