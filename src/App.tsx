@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from './store/hooks'
 import {  loading, errorMessage, changeErrorMessage } from './store/slices/tableData';
 
 
-function App() {
+function App() { 
   const Loading = useAppSelector(loading)
   const Error = useAppSelector(errorMessage)
   const dispatch = useAppDispatch()

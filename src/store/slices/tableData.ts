@@ -11,7 +11,7 @@ const initialState: tableDataInitialStateInterface = {
     selectedTableRow: [],
     loading: false,
     errorMessage: ''
-}
+} 
 
 export const tableReducer = createSlice({
     name: 'tokenReducer',
