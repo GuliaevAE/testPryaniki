@@ -32,17 +32,15 @@ const AddDialog = () => {
         event.preventDefault();
         const target = event.currentTarget.elements;
 
-        let companySigDateNewDate = Date.parse(target.companySigDate.value)
-        let employeeSigDateNewDate = Date.parse(target.employeeSigDate.value)
-        
+
         const data = {
-            companySigDate: isNaN(companySigDateNewDate) ? '' : new Date(companySigDateNewDate).toISOString(),
+            companySigDate: !target.companySigDate.value ? '' : target.companySigDate.value + ':00.000Z',
             companySignatureName: target.companySignatureName.value,
             documentName: target.documentName.value,
             documentStatus: target.documentStatus.value,
             documentType: target.documentType.value,
             employeeNumber: target.employeeNumber.value,
-            employeeSigDate: isNaN(employeeSigDateNewDate) ? '' :  new Date(employeeSigDateNewDate).toISOString(),
+            employeeSigDate: !target.employeeSigDate.value ? '' : target.employeeSigDate.value + ':00.000Z',
             employeeSignatureName: target.employeeSignatureName.value,
         };
         clickDialogButton(data);

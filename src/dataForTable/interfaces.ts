@@ -16,7 +16,6 @@ export interface CustomForm extends HTMLFormElement {
     readonly elements: CustomElements;
 }
 
-
 export interface CustomDataObject {
     companySigDate: string,
     companySignatureName: string,
@@ -30,26 +29,13 @@ export interface CustomDataObject {
 }
 
 
-
-
-
 ////////////////redux
 
 export interface authInitialStateInterface {
-    token: string ,
-  }
+    token: string,
+}
 
-
-
-export interface tableDataItem {
-    companySigDate: string,
-    companySignatureName: string,
-    documentName: string,
-    documentStatus: string,
-    documentType: string,
-    employeeNumber: string,
-    employeeSigDate: string,
-    employeeSignatureName: string,
+export interface tableDataItem extends CustomDataObject {
     id: string
 }
 
@@ -57,5 +43,5 @@ export interface tableDataInitialStateInterface {
     tableData: tableDataItem[] | null,
     selectedTableRow: tableDataItem[],
     loading: boolean,
-    errorMessage:string
+    errorMessage: string
 }

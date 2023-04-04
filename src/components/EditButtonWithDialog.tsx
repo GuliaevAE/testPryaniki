@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box, Button, TextField } from '@mui/material';
 
-import { CustomForm } from '../dataForTable/interfaces';
+import { CustomDataObject, CustomForm, tableDataItem } from '../dataForTable/interfaces';
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 
 import { selectedTableRow } from '../store/slices/tableData';
@@ -25,6 +25,9 @@ const EditButtonWithDialog = () => {
         setOpen(false);
     };
 
+    const clickDialogButton = async (dataObject: tableDataItem) => {
+        await asyncEditTableData(dispatch, dataObject) && handleClose()
+    }
 
     const handletextField = async (event: React.FormEvent<CustomForm>) => {
         event.preventDefault();
@@ -41,7 +44,7 @@ const EditButtonWithDialog = () => {
             employeeSignatureName: target.employeeSignatureName.value,
             id: selectedTableRowSelector[0].id
         };
-        await asyncEditTableData(dispatch, data) && handleClose()
+        clickDialogButton(data)
     }
     return (
         <Box>

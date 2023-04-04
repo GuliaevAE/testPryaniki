@@ -48,6 +48,7 @@ export default function Table() {
 
     useEffect(() => {
         const token = Cookies.get('token');
+        console.log(token)
         if (token) {
             axios.defaults.headers['x-auth'] = token
             dispatch(changeJWTToken(token))
