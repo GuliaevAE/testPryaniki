@@ -11,6 +11,17 @@ import { asyncAddTableData } from '../dataForTable/functions';
 import { useAppDispatch } from '../store/hooks'
 import { CustomDataObject, CustomForm } from '../dataForTable/interfaces';
 
+const AddButton_style = {
+    background: 'black',
+    color: 'white',
+    margin: '5px 0',
+    borderColor: 'white',
+    '&:hover': {
+        color: 'black',
+        background: 'white',
+        borderColor: 'black',
+    }
+}
 
 const AddDialog = () => {
     const dispatch = useAppDispatch()
@@ -31,8 +42,6 @@ const AddDialog = () => {
     const handletextField = (event: React.FormEvent<CustomForm>) => {
         event.preventDefault();
         const target = event.currentTarget.elements;
-
-
         const data = {
             companySigDate: !target.companySigDate.value ? '' : target.companySigDate.value + ':00.000Z',
             companySignatureName: target.companySignatureName.value,
@@ -47,17 +56,7 @@ const AddDialog = () => {
     }
     return (
         <Box>
-            <Button sx={{
-                background: 'black',
-                color: 'white',
-                margin: '5px 0',
-                borderColor: 'white',
-                '&:hover': {
-                    color: 'black',
-                    background: 'white',
-                    borderColor: 'black',
-                }
-            }}
+            <Button sx={AddButton_style}
                 onClick={handleClickOpen}
                 variant="outlined">Add</Button>
             <Dialog
@@ -82,14 +81,12 @@ const AddDialog = () => {
                         <TextField
                             id='companySignatureName'
                             color='primary'
-
                             type='text'
                             InputLabelProps={{ shrink: true }}
                             margin='dense'
                             fullWidth
                             label="companySignatureName"
                             variant="standard" />
-
                         <TextField
                             id='documentName'
                             color='primary'
@@ -99,7 +96,6 @@ const AddDialog = () => {
                             fullWidth
                             label="documentName"
                             variant="standard" />
-
                         <TextField
                             id='documentStatus'
                             color='primary'
@@ -145,13 +141,9 @@ const AddDialog = () => {
                             fullWidth
                             label="employeeSignatureName"
                             variant="standard" />
-
                     </DialogContent>
                     <DialogActions>
                         <Button type='submit' sx={{ margin: '0 10px' }}>Submit</Button>
-                        {/* <Button sx={{ margin: '0 10px' }} onClick={handleClose} autoFocus>
-                            Agree
-                        </Button> */}
                     </DialogActions>
                 </form>
 

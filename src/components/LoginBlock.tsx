@@ -2,17 +2,33 @@ import { Box, Button, TextField } from '@mui/material';
 import React, { useState, FormEvent, useRef, useEffect, ChangeEvent } from 'react';
 import { useAppDispatch } from '../store/hooks'
 import { changeJWTToken } from '../store/slices/auth';
-
-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
-
 import { useNavigate } from 'react-router-dom';
-
 import Cookies from 'js-cookie'
 import { HOST } from '../dataForTable/functions';
 import { changeErrorMessage, changeLoading } from '../store/slices/tableData';
 
+
+
+ ///styles for MUI
+ const LoginBlock_style = {
+    width: '80%',
+    height: 'min-content',
+    maxWidth: '400px',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'black',
+    boxShadow: '0 0 0 0 white, 0 0 0  2px  black, 0 0 0 0 white, 0 0 0  0  black',
+    transition: 'opacity 1s 1s, top 1s 1s,  box-shadow .3s ease-out',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    '&:hover': {
+        boxShadow: '0 0 0 9px white, 0 0 0  11px  black, 0 0 0 18px white, 0 0 0  20px  black',
+    },
+}
+//////////////////
 
 const Login = () => {
     const dispatch = useAppDispatch()
@@ -21,9 +37,6 @@ const Login = () => {
     const [username, setusername] = useState<string>('user13')
     const [password, setPassword] = useState<string>('password')
     const [succsess, setSuccsess] = useState<null | boolean>(null)
-
-
-
 
     function login(e: FormEvent) {
         e.preventDefault()
@@ -59,28 +72,13 @@ const Login = () => {
         succsess && setTimeout(() => navigate('/table'), 2000)
     }, [succsess])
 
+
     return (
         <ThemeProvider theme={theme}>
-            <Box
-                sx={{
-                    width: '80%',
-                    height: 'min-content',
-                    maxWidth: '400px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    backgroundColor: 'black',
-                    boxShadow: '0 0 0 0 white, 0 0 0  2px  black, 0 0 0 0 white, 0 0 0  0  black',
-                    transition: 'opacity 1s 1s, top 1s 1s,  box-shadow .3s ease-out',
-                    position: 'absolute',
-                    top: !succsess ? '50%' : '0%',
-                    opacity: !succsess ? '1' : '0',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    '&:hover': {
-                        boxShadow: '0 0 0 9px white, 0 0 0  11px  black, 0 0 0 18px white, 0 0 0  20px  black',
-                    },
-                }}
-            >
+            <Box sx={Object.assign(LoginBlock_style, {
+                top: !succsess ? '50%' : '0%',
+                opacity: !succsess ? '1' : '0',
+            })}>
                 <div ref={loginPanel}>
                     <form className='z-[1]  bg-[white] py-[30px] px-[20px]  relative' onSubmit={(e) => login(e)}>
                         <TextField onInput={(e: ChangeEvent<HTMLInputElement>) => setusername(e.target.value)} color='primary' type='login' margin='dense' fullWidth label="Login" variant="standard" />

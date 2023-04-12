@@ -17,6 +17,66 @@ import EditButtonWithDialog from './EditButtonWithDialog';
 import { tableDataItem } from '../dataForTable/interfaces';
 import LogoutButton from './LogoutButton';
 
+
+
+///styles for MUI
+const TableBlock_style = {
+    position: 'absolute',
+    height: '80%',
+    maxHeight: '500px',
+    top: '100%',
+    opacity: '0',
+    transform: 'translateY(-50%)',
+    maxWidth: '1200px',
+    width: '90%',
+    margin: ' 0 15px',
+    transition: 'top 1s , opacity 1s',
+    '&.active': {
+        top: '50%',
+        opacity: '1',
+    },
+}
+
+const TableBlock_buttons_style = {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'end',
+    gap: '5px'
+}
+
+const DataGrid_style = {
+    color: 'white',
+    background: 'black',
+    border: 'none',
+    borderRadius: '5px',
+    fontSize: '1rem',
+    '.MuiSvgIcon-root, .MuiDataGrid-withBorderColor ,.MuiDataGrid-checkboxInput, .MuiToolbar-root': {
+        color: 'white',
+    },
+    '.MuiDataGrid-virtualScroller': {
+        '&::-webkit-scrollbar': {
+            width: '15px',
+        },
+        '&::-webkit-scrollbar-track': {
+            background: 'transparent'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: 'white',
+            borderRadius: '10px',
+            border: '3px solid black',
+        }
+    },
+    '.PrivateSwitchBase-input': {
+        borderRadius: '0'
+    }
+}
+//////////////////
+
+
+
+
+
+
 export default function Table() {
     const tokenSelector = useAppSelector(token)
     const tableSelector = useAppSelector(tableData)
@@ -66,32 +126,11 @@ export default function Table() {
         setTimeout(() => datasGrid.current.classList.add('active'), 1000)
     }, [])
 
+    
+
     return (
-        <Box
-            ref={datasGrid}
-            sx={{
-                position: 'absolute',
-                height: '80%',
-                maxHeight: '500px',
-                top: '100%',
-                opacity: '0',
-                transform: 'translateY(-50%)',
-                maxWidth: '1200px',
-                width: '90%',
-                margin: ' 0 15px',
-                transition: 'top 1s , opacity 1s',
-                '&.active': {
-                    top: '50%',
-                    opacity: '1',
-                },
-            }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    width: '100%',
-                    justifyContent: 'end',
-                    gap: '5px'
-                }}>
+        <Box ref={datasGrid} sx={TableBlock_style}>
+            <Box sx={TableBlock_buttons_style}>
                 <EditButtonWithDialog />
                 <DellButton />
                 <AddButtonWithDialog />
@@ -99,33 +138,7 @@ export default function Table() {
             </Box>
 
             <DataGrid
-                sx={{
-                    color: 'white',
-                    background: 'black',
-                    border: 'none',
-                    borderRadius: '5px',
-                    fontSize: '1rem',
-                    '.MuiSvgIcon-root, .MuiDataGrid-withBorderColor ,.MuiDataGrid-checkboxInput, .MuiToolbar-root': {
-                        color: 'white',
-                    },
-                    '.MuiDataGrid-virtualScroller': {
-                        '&::-webkit-scrollbar': {
-                            width: '15px',
-                        },
-                        '&::-webkit-scrollbar-track': {
-                            background: 'transparent'
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            background: 'white',
-                            borderRadius: '10px',
-                            border: '3px solid black',
-                        }
-                    },
-                    '.PrivateSwitchBase-input': {
-                        borderRadius: '0'
-                    }
-                }}
-
+                sx={DataGrid_style}
                 rows={tableRow ? tableRow : []}
                 columns={columns}
                 checkboxSelection

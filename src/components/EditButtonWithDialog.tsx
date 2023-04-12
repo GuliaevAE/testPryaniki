@@ -11,6 +11,19 @@ import { useAppSelector, useAppDispatch } from '../store/hooks'
 import { selectedTableRow } from '../store/slices/tableData';
 import { asyncEditTableData } from '../dataForTable/functions';
 
+const EditButton_style = {
+    background: 'black',
+    color: 'white',
+    margin: '5px 0',
+    borderColor: 'white',
+    justifySelf: 'end',
+    transition: 'transform .5s ease-out',
+    '&:hover': {
+        color: 'black',
+        background: 'white',
+        borderColor: 'black',
+    }
+}
 
 const EditButtonWithDialog = () => {
     const dispatch = useAppDispatch()
@@ -48,20 +61,9 @@ const EditButtonWithDialog = () => {
     }
     return (
         <Box>
-            <Button sx={{
-                background: 'black',
-                color: 'white',
-                margin: '5px 0',
-                borderColor: 'white',
-                justifySelf: 'end',
-                transform: selectedTableRowSelector.length !== 1 ? 'translateY(calc(100% + 5px) )' : 'none',
-                transition: 'transform .5s ease-out',
-                '&:hover': {
-                    color: 'black',
-                    background: 'white',
-                    borderColor: 'black',
-                }
-            }}
+            <Button sx={Object.assign(EditButton_style, {
+                transform: selectedTableRowSelector.length !== 1 ? 'translateY(calc(100% + 5px) )' : 'none'
+            })}
                 onClick={handleClickOpen}
                 variant="outlined">Edit</Button>
             <Dialog
@@ -84,7 +86,6 @@ const EditButtonWithDialog = () => {
                             fullWidth label={"companySigDate"}
                             variant="standard"
                             defaultValue={selectedTableRowSelector.length === 1 && selectedTableRowSelector[0].companySigDate && new Date(selectedTableRowSelector[0].companySigDate).toISOString().split('.')[0]}
-
                         />
                         <TextField
                             id='companySignatureName'
